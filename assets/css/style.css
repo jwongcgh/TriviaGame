@@ -1,3 +1,28 @@
-h1 {
-	color: blue;
+/*.answ {
+	border: dotted blue 1px;
+	height: 25px;
+}*/
+
+.answ1 {
+	border: red dotted 1px;
+	height: 25px;
+	overflow: auto;
+}
+
+.answ2 {
+	border: green dotted 1px;
+	height: 25px;
+	overflow: auto;
+}
+
+.answ3 {
+	border: blue dotted 1px;
+	height: 25px;
+	overflow: auto;
+}
+
+.answ0 {
+	border: orange dotted 1px;
+	height: 25px;
+	overflow: auto;
 }
