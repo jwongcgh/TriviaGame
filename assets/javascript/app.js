@@ -13,45 +13,48 @@ $(document).ready(function() {
         var main = false;
         var start = false;
         var pseudoIndex = [];  // used for random selection of question
+        var scrambled = [];
         var reset = true;   // used to reset array for random question selection
-
+        var correct = "0"   // keeps track of correct answer since choices are randomized
+                            // without scrambling of choices, right answer is always the first one
 
         var library = {
                 "1": {
-                    "quest": "this is question 1",
-                    "answer": "2",
+                    "quest": "kitties are not",
+                    // "answer": "2",
                     "choices": {
-                        "0": "this is index 0",
+                        "0": "doggies index 0",
                         "1": "this is index 1",
                         "2": "this is index 2",
-                        "3": "this is index 3"
+                        "3": "this is index 3",
+                        "test": "test",
                     }
                 },
                 "2": {
-                    "quest": "this is question 2",
-                    "answer": "0",
+                    "quest": "the sky is",
+                    // "answer": "0",
                     "choices": {
-                        "0": "this is index 0 q2",
+                        "0": "blue index 0 q2",
                         "1": "this is index 1 q2",
                         "2": "this is index 2 q2",
                         "3": "this is index 3 q2"
                     }
                 },
                 "3": {
-                    "quest": "this is question 3",
-                    "answer": "3",
+                    "quest": "forever",
+                    // "answer": "3",
                     "choices": {
-                        "0": "this is index 0 q3",
+                        "0": "young is index 0 q3",
                         "1": "this is index 1 q3",
                         "2": "this is index 2 q3",
                         "3": "this is index 3 q3"
                     }
                 },
                 "4": {
-                    "quest": "this is question 4",
-                    "answer": "1",
+                    "quest": "one plus one is",
+                    // "answer": "1",
                     "choices": {
-                        "0": "this is index 0 q4",
+                        "0": "two index 0 q4",
                         "1": "this is index 1 q4",
                         "2": "this is index 2 q4",
                         "3": "this is index 3 q4"
@@ -74,17 +77,18 @@ $(document).ready(function() {
         function countPre() {
             $("#start").hide(500, 0); // hiding start button, option to prevent another click after start
             console.log("reset values is: " + reset);
-            if (reset) { pseudo();}
-            console.log("0" + minutes + ":" + "0" + secs);
+            if (reset) { pseudo(); }
+            // console.log("0" + minutes + ":" + "0" + secs);
             $("#countDown").html("0" + minutes + ":" + "0" + secs);
             k = 0;
-            secs = 4;
+            secs = 4;       //  sets time wait before showing next word
+            scrambled = []; // emptying array
+            scramble();     // scrambles choices to be loaded in divs
             delayPre = setInterval(count, 1000);
         } // end of countPre
 
         function count() {
             k++;
-            // console.log("value of k is :" + k);
             secs--;
             if (secs < 10) {
                 console.log("00" + ":" + "0" + secs);
@@ -108,10 +112,11 @@ $(document).ready(function() {
 
 function pseudo() {
 // creating array with values from library
+console.log("inside pseudo");
 for (i=0; i < Object.keys(library).length; i++) {
             pseudoIndex.push(i+1);
         }
-        console.log(pseudoIndex);
+        console.log("pseudoIndex array: " + pseudoIndex);
     reset = false;
     console.log("reset value changed to: " + reset);
 }   // end pseudo
@@ -133,6 +138,27 @@ for (i=0; i < Object.keys(library).length; i++) {
 
     } // end qRandom
 
+
+// ************************************* scramble choices ************************************* //
+        
+    function scramble() {
+        // choicesArr length is same as number of choices in library
+        // if number of choices is unknown, loop through library number of choices
+        var choicesArr = [0,1,2,3];
+        for (i=0; i<Object.keys(library[1].choices).length; i++) {
+            var rand = Math.floor(Math.random() * choicesArr.length);
+            scrambled.push(choicesArr[rand]);
+            // console.log("choices being pushed: " + choicesArr[rand]);
+            if (choicesArr[rand] == 0) {
+                correct = i;
+            }
+            choicesArr.splice(rand, 1);
+        }
+        console.log("scrambled array: " + scrambled);
+        console.log("correct= " + correct);
+    } 
+
+
 // do I want to get into the trouble of randomizing display order of choices?
 
         // ************************************* Pick question ************************************* //
@@ -144,12 +170,10 @@ for (i=0; i < Object.keys(library).length; i++) {
         // fourth: display main countdown, go to compare to answer
         function pickQuest() {
             clearInterval(delayPre);
-            console.log("from time out 1");
-            // qRandom();
-            console.log("value of q= " + q);
+            // console.log("value of q= " + q);
             $("#choices").empty();
             $("#inquiry").html(library[q].quest);
-            console.log(library[q].quest);
+            // console.log(library[q].quest);
 
             for (i = 0; i < 4; i++) {
                 console.log(library[q].choices[i]);
@@ -159,9 +183,8 @@ for (i=0; i < Object.keys(library).length; i++) {
                 $answ.addClass("answ" + i);
                 $answ.attr("data-choice", i);
                 $("#choices").append($answ);
-                $(".answ" + i).html(library[q].choices[i]);
+                $(".answ" + i).html(library[q].choices[scrambled[i]]);
             } // end of for loop
-            console.log("go to listen to click choice aka userChoice")
             userChoice();
 
         } // end of pickQuest
@@ -178,11 +201,11 @@ for (i=0; i < Object.keys(library).length; i++) {
 
         function userChoice() {
             console.log("inside userChoice function");
-            console.log("correct answer is: " + library[q].answer);
+            // console.log("correct answer is: " + correct);
             k = 0;
-            secs = 4;
+            secs = 4;   // sets time allowance for guess
             main = true;
-            console.log("main value= " + main);
+            // console.log("main value= " + main);
             mainCount = setInterval(count, 1000);
 
 
@@ -216,12 +239,11 @@ for (i=0; i < Object.keys(library).length; i++) {
         function compare() {
             clearInterval(mainCount);
             main = false;
-            console.log("main value= " + main);
-            // q++; // because added one here, removed one to get to compare to pervious answer
-            console.log("q is: "+ q);
-            console.log(pseudoIndex.length);
-            console.log(pseudoIndex);
-            if (selected == library[q].answer) {
+            // console.log("main value= " + main);
+            // console.log("q is: "+ q);
+            // console.log(pseudoIndex.length);
+            // console.log(pseudoIndex);
+                if (selected == correct) {
                 console.log("correct");
                 wins++;
                 $("#inquiry").html("correct!");
@@ -232,7 +254,8 @@ for (i=0; i < Object.keys(library).length; i++) {
             } else {
                 console.log("wrong");
                 losses++;
-                $("#inquiry").html("wrong! Right answer is: " + library[q].answer);
+                // $("#inquiry").html("wrong! Right answer is: " + library[q].answer);
+                $("#inquiry").html("wrong! Right answer is: " + correct);
                 if (pseudoIndex.length > 0) {
                     $("#choices").html("next in: ");
                     countPre();
@@ -250,9 +273,6 @@ for (i=0; i < Object.keys(library).length; i++) {
     function showStats() {
         console.log("wins= " + wins);
         console.log("losses= " + losses);
-        // main = false;
-        // console.log("main value= " + false);
-        // q = 1;
         wins = 0;
         losses = 0;
         reset = true;
