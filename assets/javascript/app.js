@@ -1,18 +1,19 @@
-
-    $(document).ready(function() {
+$(document).ready(function() {
 
         // ********************************* variables and library here ********************************* //
 
-        var wins;
-        var losses;
+        var wins = 0;
+        var losses = 0;
         var minutes = 0; // current time allowance change below were pertinent. Is a minute too long?
         var time = 0; // goes with minutes variable
         var secs = 0;
-        var q = 1;
+        var q;
         var selected;
         var k = 0;
         var main = false;
         var start = false;
+        var pseudoIndex = [];  // used for random selection of question
+        var reset = true;   // used to reset array for random question selection
 
 
         var library = {
@@ -59,28 +60,32 @@
             } // library end
 
 
-        // ********************************* creating divs for choices ********************************* //
+        // ********************************* creating divs ********************************* //
 
 
         // ************************************* count down here ************************************* //
         // listen to start game button 
+        
+
 
         $("#start").on("click", countPre); // here we wait for click, calls on countPre
         // interval countdown allows readyness of player and for main countdown event
         // calls function to show up randomly selected question and corresponding choices
         function countPre() {
-            $("#start").hide(500, 0);   // hiding start button, option to prevent another click after start
+            $("#start").hide(500, 0); // hiding start button, option to prevent another click after start
+            console.log("reset values is: " + reset);
+            if (reset) { pseudo();}
             console.log("0" + minutes + ":" + "0" + secs);
             $("#countDown").html("0" + minutes + ":" + "0" + secs);
             k = 0;
             secs = 4;
-            delayPre = setInterval(count, 1000); 
+            delayPre = setInterval(count, 1000);
         } // end of countPre
 
         function count() {
             k++;
             // console.log("value of k is :" + k);
-            secs --;
+            secs--;
             if (secs < 10) {
                 console.log("00" + ":" + "0" + secs);
                 $("#countDown").html("0" + minutes + ":" + "0" + secs);
@@ -89,15 +94,50 @@
                 $("#countDown").html("0" + minutes + ":" + secs);
             }
             if (secs <= 0) {
-                if (!main) { pickQuest();}
-                else { compare();}
+                if (!main) {
+                    qRandom();
+                } else {
+                    compare();
+                }
             }
-            
+
         }
+
+
+// ************************************* random pick ************************************* //
+
+function pseudo() {
+// creating array with values from library
+for (i=0; i < Object.keys(library).length; i++) {
+            pseudoIndex.push(i+1);
+        }
+        console.log(pseudoIndex);
+    reset = false;
+    console.log("reset value changed to: " + reset);
+}   // end pseudo
+
+    function qRandom() {
+        
+        // creating array with values from library
+        // selecting a random number from array
+        var rand = Math.floor(Math.random() * pseudoIndex.length);
+        // assigning library key to q
+        q = pseudoIndex[rand]
+        console.log("random q: " + q);
+        // removing the used array number that matches the key in library 
+        pseudoIndex.splice(rand, 1);
+        // in next pickQuest function call, the already used keys will not be selected
+        console.log(pseudoIndex);
+
+        pickQuest()
+
+    } // end qRandom
+
+// do I want to get into the trouble of randomizing display order of choices?
 
         // ************************************* Pick question ************************************* //
 
-        // randomly select question and relevant choices
+        // randomly select question and relevant choices: qRandom & pseudo above
         // first: clear pre-game count down - moved to userChoice function
         // second: pick question
         // third: display question
@@ -105,7 +145,7 @@
         function pickQuest() {
             clearInterval(delayPre);
             console.log("from time out 1");
-            // q++; // question count
+            // qRandom();
             console.log("value of q= " + q);
             $("#choices").empty();
             $("#inquiry").html(library[q].quest);
@@ -131,7 +171,7 @@
         // keep track of length of library, call on end game function
         // call on click event here
 
-        
+
 
         // ************************************* on click event here ************************************* //
         // listen to click 
@@ -173,40 +213,56 @@
 
         // ************************************* compare to answer ************************************* //
         // was choice the correct one?
-            function compare() {
-                clearInterval(mainCount);
-                main = false;
-                q++;
-                if (selected == library[q-1].answer) {
-                    console.log("correct");
-                    $("#inquiry").html("correct!");
+        function compare() {
+            clearInterval(mainCount);
+            main = false;
+            console.log("main value= " + main);
+            // q++; // because added one here, removed one to get to compare to pervious answer
+            console.log("q is: "+ q);
+            console.log(pseudoIndex.length);
+            console.log(pseudoIndex);
+            if (selected == library[q].answer) {
+                console.log("correct");
+                wins++;
+                $("#inquiry").html("correct!");
+                if (pseudoIndex.length > 0) {
                     $("#choices").html("next in: ");
-                    console.log("next in: ");
+                    countPre(); 
+                } else { showStats();}
+            } else {
+                console.log("wrong");
+                losses++;
+                $("#inquiry").html("wrong! Right answer is: " + library[q].answer);
+                if (pseudoIndex.length > 0) {
+                    $("#choices").html("next in: ");
                     countPre();
-
                 } else {
-                    console.log("wrong");
-                    $("#inquiry").html("wrong! Right answer is: "+ library[q-1].answer);
-                    $("#choices").html("next in: ");
-                    // showAnswer();
-                    countPre();
+                    showStats();
                 }
+            }
+        
 
-            } // end of compare
-
-        // if yes, show congrats! Pause here for a short pause before next question.
-        // if empty or wrong choice, show wrong!, show corrrect answer, a short pause before next question
-        // keep track of wins and losses
-        // retreive new question
-
-        // ************************************* end game ************************************* //
-        // show stats: wins, losses
-        // show "start new game" button
+    } // end of compare
 
 
-        // ************************************* start new game ************************************* //
-        // button for start new game if player quits current game or game ends
+    // ************************************* notification ************************************* //
+
+    function showStats() {
+        console.log("wins= " + wins);
+        console.log("losses= " + losses);
+        // main = false;
+        // console.log("main value= " + false);
+        // q = 1;
+        wins = 0;
+        losses = 0;
+        reset = true;
+        console.log("reset back to: " + reset)
+        $("#start").show();
+    }
+
+
+    // ************************************* start new game ************************************* //
+    // button for start new game if player quits current game or game ends
 
 
     }); // end document ready
-   
