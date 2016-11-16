@@ -1,9 +1,133 @@
-/*.answ {
-	border: dotted blue 1px;
-	height: 25px;
-}*/
+html, body {
+	box-sizing: border-box;
+	background-image: url("../images/brickwall.png")
+}
 
-.answ1 {
+.container {
+	padding: 0;
+	margin: 0 auto;
+	max-width: 960px;
+	text-align: center;
+	
+}
+
+div {
+
+}
+
+#header {
+	max-width: 940px;
+	height: auto;
+	font-size: 2em;
+	font-weight: bold;
+	padding: 20px 0 10px 0;
+	text-align: center;
+	align-content: center;
+}
+
+#footnote {
+	font-size: 1em;
+}
+
+
+
+h1 {
+	max-width: 50%;
+	padding: 10px 20px 10px 20px;
+	margin: 0 auto;
+	border: red dotted 1px;
+	border-radius: 15px;
+	/*outline: orange dotted 1px;*/
+	/*background-clip: content-box;
+	background-color: white;
+	opacity: 45%;*/
+}
+
+hr {
+	max-width: 75%;
+	border: none;
+	background-color: lightblue;
+	height: 1px;
+	/*margin-top: 15px;*/
+	margin-bottom: 15px;
+}
+
+.main {
+	text-align: center;
+}
+
+#countDown {
+max-width: 45%;
+text-align: center;
+font-size: 4em;
+color: green;
+margin: 0 auto;
+border-top: purple 1px dotted;
+border-bottom: purple 1px dotted;
+border-radius: 15px;
+padding: 15px 0 15px 0;
+}
+
+#inquiry {
+	color: blue;
+	border: orange 1px dotted;
+	max-width: 100%;
+	padding:10px 0 10px 0;
+	font-size: 1.8em;
+	border-radius: 15px;
+}
+
+
+#wrap {
+	border-top: #FF7194 1px dotted;
+	border-bottom: #FF71DF 1px dotted;
+	height: 200px;
+	border-radius: 15px;
+}
+
+#choices {
+	border-left: #FF7194 1px dotted;
+	border-right: #FF71DF 1px dotted;
+	font-size: 1.3em;
+	height: 190px;
+	border-radius: 15px;
+	margin: 5px;
+	overflow: auto;
+}
+
+.answ {
+	padding: 10px 0 10px 0;
+	margin: 5px auto;
+	border-left: orange dotted 1px;
+	border-right: orange dotted 1px;
+	/*border-top: #F3F5FF dotted 1px;
+	border-bottom: #F3F5FF dotted 1px;*/
+	/*border-top: orange dotted 1px;
+	border-bottom: orange dotted 1px;*/
+	border-radius: 10px;
+	max-width: 75%;
+}
+
+#start {
+	border: orange 1px dotted;
+	max-width: 20%;
+	font-size: 1.2em;
+	margin: 10px auto;
+	padding: 5px 10px 5px 10px;
+	border-radius: 10px;
+}
+
+.outcome {
+	margin: 15px auto;
+	font-size: 2em;
+	font-style: bold;
+	border-left: orange 1px dotted;
+	border-right: orange 1px dotted;
+	border-radius: 15px;
+	padding: 15px 0 15px 0;
+	max-width: 50%;
+}
+/*.answ1 {
 	border: red dotted 1px;
 	height: 25px;
 	overflow: auto;
@@ -25,4 +149,4 @@
 	border: orange dotted 1px;
 	height: 25px;
 	overflow: auto;
-}
+}*/
