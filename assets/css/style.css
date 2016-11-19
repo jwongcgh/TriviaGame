@@ -1,145 +1,158 @@
-html, body {
-	box-sizing: border-box;
-	background-image: url("../images/brickwall.png");
-	}
+html,
+body {
+    box-sizing: border-box;
+    background-image: url("../images/brickwall.png");
+}
 
 .container {
-	padding: 0;
-	margin: 0 auto;
-	max-width: 960px;
-	text-align: center;
-	
+    padding: 0;
+    margin: 0 auto;
+    max-width: 960px;
+    text-align: center;
 }
 
 .message {
-	margin-top:100px;
+    margin-top: 100px;
 }
 
 #header {
-	max-width: 55%;
-	height: auto;
-	font-size: 2.5em;
-	font-weight: bold;
-	padding: 5px 0 5px 0;
-	text-align: center;
-	text-shadow: -1px -1px 1px lightblue;
-	border-left: #FF3800 dotted 1px;
-	border-right: #FF3800 dotted 1px;
-	border-radius: 15px;
-	margin: 0 auto;
-	margin-top: 10px;
+    max-width: 55%;
+    height: auto;
+    font-size: 2.5em;
+    font-weight: bold;
+    padding: 5px 0 5px 0;
+    text-align: center;
+    text-shadow: -1px -1px 1px lightblue;
+    border-left: #FF3800 dotted 1px;
+    border-right: #FF3800 dotted 1px;
+    border-radius: 15px;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
 h1 {
-	max-width: 85%;
-	padding: 15px 20px 15px 20px;
-	margin: 0 auto;
-	border: #FF3800 dotted 1px;
-	border-radius: 15px;
+    max-width: 85%;
+    padding: 15px 20px 15px 20px;
+    margin: 0 auto;
+    border: #FF3800 dotted 1px;
+    border-radius: 15px;
 }
 
 .footnote {
-	font-size: 1em;
-	text-shadow: 1px 1px lightblue;
-	height: 60px;
+    font-size: 1em;
+    text-shadow: 1px 1px lightblue;
+    height: 60px;
 }
 
 hr {
-	max-width: 50%;
-	border: none;
-	background-color: lightblue;
-	height: 1px;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	box-shadow: 1px 1px #91FF8B;
+    max-width: 50%;
+    border: none;
+    background-color: lightblue;
+    height: 1px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    box-shadow: 1px 1px #91FF8B;
 }
 
 .main {
-	text-align: center;
+    text-align: center;
 }
 
 #countDown {
-max-width: 45%;
-height: 95;
-text-align: center;
-font-size: 4em;
-color: green;
-margin: 0 auto;
-border-top: purple 1px dotted;
-border-bottom: purple 1px dotted;
-border-radius: 15px;
-padding: 15px 0 15px 0;
- /*horizontal vertical blur spread color*/
-box-shadow: 0 2px 1px -1px yellow;
-text-shadow: 1px 1px pink;
+    max-width: 45%;
+    height: 95;
+    text-align: center;
+    font-size: 4em;
+    color: green;
+    margin: 0 auto;
+    border-top: purple 1px dotted;
+    border-bottom: purple 1px dotted;
+    border-radius: 15px;
+    padding: 15px 0 15px 0;
+    /*horizontal vertical blur spread color*/
+    box-shadow: 0 2px 1px -1px yellow;
+    text-shadow: 1px 1px pink;
 }
 
 #inquiry {
-	
-	color: blue;
-	border-top: orange 1px dotted;
-	border-left: orange 1px dotted;
-	border-right: orange 1px dotted;
-	max-width: 95%;
-	height: 30px;
-	margin: 20px auto;
-	/*margin-top: 20px;*/
-	padding:15px 0 15px 0;
-	font-size: 1.8em;
-	border-radius: 15px;
-	box-shadow: 0 2px 2px 1px lightgreen;
+    color: blue;
+    border-top: orange 1px dotted;
+    border-left: orange 1px dotted;
+    border-right: orange 1px dotted;
+    max-width: 95%;
+    height: 30px;
+    margin: 20px auto;
+    padding: 15px 0 15px 0;
+    font-size: 1.8em;
+    border-radius: 15px;
+    box-shadow: 0 2px 2px 1px lightgreen;
 }
 
 #wrap {
-	border-top: #FF7194 1px dotted;
-	border-bottom: #FF71DF 1px dotted;
-	height: 200px;
-	max-width: 90%;
-	border-radius: 15px;
-	margin: 10px auto;
+    border-top: #FF7194 1px dotted;
+    border-bottom: #FF71DF 1px dotted;
+    height: 200px;
+    max-width: 90%;
+    border-radius: 15px;
+    margin: 10px auto;
 }
 
 #choices {
-	border-left: #FF7194 1px dotted;
-	border-right: #FF71DF 1px dotted;
-	font-size: 1.3em;
-	height: 190px;
-	border-radius: 15px;
-	margin: 5px;
-	overflow: auto;
+    border-left: #FF7194 1px dotted;
+    border-right: #FF71DF 1px dotted;
+    font-size: 1.3em;
+    height: 190px;
+    border-radius: 15px;
+    margin: 5px;
+    overflow: auto;
 }
 
 .answ {
-	padding: 10px 0 10px 0;
-	margin: 5px auto;
-	border-left: orange dotted 1px;
-	border-right: red dotted 1px;
-	border-radius: 10px;
-	max-width: 55%;
+    padding: 10px 0 10px 0;
+    margin: 5px auto;
+    border-left: orange dotted 1px;
+    border-right: red dotted 1px;
+    border-radius: 10px;
+    max-width: 55%;
 }
 
 .start {
-	height: 30px;
+    height: 30px;
 }
 
 #start {
-	border: orange 1px dotted;
-	max-width: 20%;
-	font-size: 1.2em;
-	margin: 10px auto;
-	padding: 5px 10px 5px 10px;
-	border-radius: 10px;
-	text-shadow: 1px 1px pink;
-	box-shadow: 1px 1px green;
+    border: orange 1px dotted;
+    max-width: 20%;
+    font-size: 1.2em;
+    margin: 10px auto;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    text-shadow: 1px 1px pink;
+    box-shadow: 1px 1px green;
 }
 
 .outcome {
-	margin: 15px auto;
-	font-size: 2em;
-	font-style: bold;
-	border-left: orange 1px dotted;
-	border-right: orange 1px dotted;
-	border-radius: 15px;
-	padding: 15px 0 15px 0;
-	max-width: 50%;
+    margin: 15px auto;
+    font-size: 2em;
+    font-style: bold;
+    border-left: orange 1px dotted;
+    border-right: orange 1px dotted;
+    border-radius: 15px;
+    padding: 15px 0 15px 0;
+    max-width: 50%;
+}
+
+#myProgress {
+    position: relative;
+    width: 30%;
+    height: 3px;
+    background-color: #ddd;
+    margin: 0 auto;
+}
+
+#myBar {
+    position: absolute;
+    width: 1%;
+    height: 100%;
+    background-color: #4CAF50;
 }
