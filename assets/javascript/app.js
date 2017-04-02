@@ -5,11 +5,11 @@
         var wins = 0;
         var losses = 0;
         var minutes = 0; // current time allowance change below were pertinent. Is a minute too long?
-        var time = 0; // goes with minutes variable
-        var secs = 1;
-        var q;
-        var selected = 9;
-        var k = 0;
+        var time = 0;   // goes with minutes variable
+        var secs = 1;   // initial value
+        var q;  // see line 291 - stores library answer keys for question displayed
+        var selected = 9;   // assigned a value that is different from any of the choices which ranges from 1 to 4
+        var k = 0;  // remnant from previous version - check again before deleting
         var main = false; // differentiates countPre from mainCount timer
         var start = false;
         var pseudoIndex = []; // used for random selection of question
@@ -18,8 +18,10 @@
         var correct = "0"; // keeps track of correct answer since choices are randomized
         // without scrambling of choices, right answer is always the first one
         var endGame = false;
-        var flicker = true;
-        var firstQ = true;
+        var flicker = true; // some css formatting
+        var firstQ = true;  // first question shown after start is clicked
+        var delayPre; // 1 second interval
+        var mainCount;
 
         var library = {
                 "1": {
@@ -107,7 +109,7 @@
                     "quest": "What do you call a group of Leopards",
                     "choices": {
                         "0": "A leap of leopards",
-                        "1": "A clowder of leaopards",
+                        "1": "A clowder of leopards",
                         "2": "A pounce of leopards",
                         "3": "A pride of leopards"
                     }
@@ -205,8 +207,6 @@
                 },
             } // library end
 
-        // console.log("library length: " + Object.keys(library).length);
-
         // ************************************* count down here ************************************* //
 
         $("#start").on("click", countPre); // waiting for click, calls on countPre
@@ -218,7 +218,6 @@
             $("#start").hide(500, 0); // hiding start button to prevent additional clicks while running
 
             // if reset true then game re-starts. Otherwise next question loads
-
             if (reset) {
                 firstQ = true;
                 $("#inquiry").empty();
@@ -240,7 +239,7 @@
         } // end of countPre
 
         // countPre allows calling endGame function, or qRandom to show random selection of question
-        // counPre also calls on compare function once mainCount ends
+        // countPre also calls on compare function once mainCount ends
         function count() {
             k++;
             secs--;
@@ -255,11 +254,10 @@
                     flicker = true;
                 } // end flicker
 
+                // minutes not needed but I like the looks of a real digital clock, that is 00:00
                 if (secs < 10) {
-                    console.log("00" + ":" + "0" + secs);
                     $("#countDown").html("0" + minutes + ":" + "0" + secs);
                 } else {
-                    console.log("00" + ":" + secs);
                     $("#countDown").html("0" + minutes + ":" + secs);
                 }
             } else {
@@ -281,13 +279,10 @@
 
         // creates (pseudo-library) array with values from library
         function pseudo() {
-            console.log("inside pseudo");
             for (i = 0; i < Object.keys(library).length; i++) {
                 pseudoIndex.push(i + 1);
             }
-            console.log("pseudoIndex array: " + pseudoIndex);
             reset = false;
-            console.log("reset value changed to: " + reset);
         } // end pseudo
 
         // selects a random number from array (pseudo-lybrary)
@@ -295,11 +290,9 @@
             var rand = Math.floor(Math.random() * pseudoIndex.length);
             // assigns library key to q
             q = pseudoIndex[rand]
-            console.log("random q: " + q);
-            // removes the used array number that matches the key in library 
+            // removes the used array number that matches the key in library
             pseudoIndex.splice(rand, 1);
             // in next pickQuest function call, the already used keys will not be selected
-            console.log(pseudoIndex);
 
             pickQuest()
 
@@ -308,7 +301,8 @@
 
         // ************************************* scramble choices ************************************* //
 
-        // randomizes choices in library before loaded in divs for display    
+        // randomizes choices in library before loaded in divs for display
+        // randomized choices are stored in scrambled array
         function scramble() {
             // choicesArr length is same as number of choices in library
             // added last minute, thus function-scramble was shaped to fit already available code while minimizing changes of the latter
@@ -316,14 +310,12 @@
             for (i = 0; i < Object.keys(library[1].choices).length; i++) {
                 var rand = Math.floor(Math.random() * choicesArr.length);
                 scrambled.push(choicesArr[rand]);
-                // console.log("choices being pushed: " + choicesArr[rand]);
+
                 if (choicesArr[rand] == 0) {
                     correct = i;
                 }
                 choicesArr.splice(rand, 1);
             }
-            console.log("scrambled array: " + scrambled);
-            console.log("correct= " + correct);
         }
 
         // ************************************* Pick question ************************************* //
@@ -331,12 +323,10 @@
         // displays question and choices to player
         function pickQuest() {
             clearInterval(delayPre);
-            // console.log("value of q= " + q);
             $("#choices").empty();
             $("#inquiry").html(library[q].quest);
 
             for (i = 0; i < 4; i++) {
-                console.log(library[q].choices[i]);
                 // creating divs for choices
                 var $answ = $("<div>");
                 $answ.addClass("answ");
@@ -353,8 +343,6 @@
 
         // listens to user clicks and stores user-selected choice
         function userChoice() {
-            console.log("inside userChoice function");
-            // console.log("correct answer is: " + correct);
             k = 0;
             secs = 11; // sets time allowance for guess
 
@@ -363,7 +351,6 @@
 
             // onclick choice selection
             $(".answ").on("click", function() {
-                console.log("clicked value of this: " + $(this).data("choice"));
 
                 // user clicks and selection is highlighted
                 // lazy way: change all at on-click of any of them, then rewrites the selected one
@@ -374,7 +361,6 @@
                 // rewriting property for selected one
                 $(this).css("border-color", "red").css("color", "red").fadeTo(100, 1).css("font-size", "1.2em");
                 selected = $(this).data("choice");
-                console.log("selected answer 'this is index " + selected + "'")
             }); // end onclick
         } // end user choice
 
@@ -384,7 +370,7 @@
             clearInterval(mainCount);
             main = false;
 
-            // loops to find correct, selected, and other options. Highlights them accordingly    
+            // loops to find correct, selected, and other options. Highlights them accordingly
             for (i = 0; i < 4; i++) {
                 if (i == correct) {
                     $(".answ" + i).css("border-color", "blue").css("color", "blue").fadeTo(100, 1).css("font-size", "1.25em").css("text-shadow", "1px 1px #2CE823");
@@ -394,7 +380,7 @@
                     $(".answ" + i).css("border-color", "blue").css("color", "blue").fadeTo(50, 0.1).css("font-size", "0.9em");
                 }
             } // end for loop
-            // console.log("selected value= " + selected);
+
             // notifies which was right answer, shows user selection as well, if any
             switch (selected) {
                 case correct:
@@ -424,8 +410,6 @@
 
         function showStats() {
             clearInterval(delayPre)
-            console.log("wins= " + wins);
-            console.log("losses= " + losses);
             // $("#inquiry").empty();
             $("#inquiry").html("Score");
             $("#countDown").html("00:00").fadeTo(500, 0.3);
@@ -436,7 +420,6 @@
             wins = 0;
             losses = 0;
             endGame = false;
-            console.log("reset back to: " + reset)
 
             // button was hidden, now it is displayed again to allow game to be started
             $("#start").show();
